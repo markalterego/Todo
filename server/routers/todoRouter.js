@@ -1,10 +1,11 @@
 import { pool } from '../helpers/db.js';
 import { Router } from 'express';
 import { emptyOrRows } from '../helpers/utils.js';
+import { auth } from '../helpers/auth.js';
 
-const router = Router();
+const todoRouter = Router();
 
-router.get('/', (req,res,next) => 
+todoRouter.get('/', (req,res,next) => 
 {
     pool.query('select * from task', (error,result) => {
         if (error) {
@@ -14,7 +15,7 @@ router.get('/', (req,res,next) =>
     });
 });
 
-router.post('/create', (req,res,next) => 
+todoRouter.post('/create', auth, (req,res,next) => 
 {
    pool.query('insert into task (description) values ($1) returning *',
         [req.body.description],
@@ -27,7 +28,7 @@ router.post('/create', (req,res,next) =>
    );
 });
 
-router.delete('/delete/:id', (req,res,next) => 
+todoRouter.delete('/delete/:id', auth, (req,res,next) => 
 {
     const id = parseInt(req.params.id);
 
@@ -42,4 +43,4 @@ router.delete('/delete/:id', (req,res,next) =>
     );
 });
 
-export default router;
+export default todoRouter;
