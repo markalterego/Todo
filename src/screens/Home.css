@@ -1,9 +1,16 @@
+body 
+{
+    background-color: aliceblue;
+    padding: 50px;
+}
+
 #todoContainer
 {
     padding: 50px;
 }
 
-.delete-button{
+.delete-button
+{
     margin-left: 30px;
 }
 
