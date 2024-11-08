@@ -1,8 +1,8 @@
+import { hash } from 'bcrypt';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
 import path from 'path';
 import { pool } from './db.js';
-import { hash } from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 const __dirname = import.meta.dirname;
 const { sign } = jwt;
@@ -12,15 +12,13 @@ const initializeTestDb = () => {
     pool.query(sql);
 }
 
-const insertTestUser = (email, password, next) => {
-    hash(password, 10, (error, hashedPassword) => {
-        pool.query('insert into account (email,password) values ($1,$2)',
-            [email,hashedPassword]);
-    });
+const insertTestUser = async (email, password, next) => {
+    const hashedPassword = await hash(password, 10);
+    await pool.query('insert into account (email,password) values ($1,$2)', [email,hashedPassword]);
 }
 
 const getToken = (email) => {
     return sign({user: email}, process.env.JWT_SECRET_KEY);
 }
 
-export { initializeTestDb, insertTestUser, getToken};
+export { getToken, initializeTestDb, insertTestUser };
