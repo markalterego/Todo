@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { UserContext } from "./UserContext";
 import axios from "axios";
-import { paste } from "@testing-library/user-event/dist/paste";
 
 const url = process.env.REACT_APP_API_URL;
 
