@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { auth } from '../helpers/auth.js';
-import { deleteTask, getTasks, postTask } from '../controllers/TaskController.js';
+import { deleteTask, getTasks, postTask } from '../controllers/taskController.js';
 
 const todoRouter = Router();
 
